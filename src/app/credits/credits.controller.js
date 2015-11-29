@@ -10,6 +10,7 @@
     function CreditsController($log, $state, $firebaseArray, fbRef) {
         var vm = this;
         var query = fbRef.child('credits').orderByChild("timestamp").limitToLast(25);
+        vm.credits_data = {};
         vm.credits = $firebaseArray(query);
         $log.log('credits: ', vm.credits);
 
@@ -17,6 +18,14 @@
             var target = credit.status == 'pending' ? 'credits.pending' : 'credits.status';
             $state.go(target, {id: credit.$id});
         };
+
+        vm.credits.$loaded()
+            .then(function(data) {
+                angular.forEach(vm.credits, function(credit) {
+                    vm.credits_data[credit.$id] = loadTransactions(fbRef, $firebaseArray, credit, {});
+                });
+            });
+
     }
 
     /** @ngInject */
@@ -39,33 +48,37 @@
                 vm.requester = new $firebaseObject(profilesRef);
                 $log.log('requester: ', vm.requester);
 
-                $log.log('vm.credit.$id: ', vm.credit.$id);
-                var query = fbRef.child('transactions').orderByChild('credit').equalTo(vm.credit.$id);
-                vm.transactions = $firebaseArray(query);
-                $log.log('transactions: ', vm.transactions);
-
-                vm.transactions.$loaded()
-                    .then(function(){
-                        vm.lent = {total: 0, count: 0};
-                        vm.paid = {total: 0, count: 0};
-                        angular.forEach(vm.transactions, function(transaction) {
-                            if(transaction.user != vm.credit.user) {
-                                vm.lent.count++;
-                                vm.lent.total += transaction.amount;
-                            } else {
-                                vm.paid.count++;
-                                vm.paid.total += transaction.amount;
-                                vm.paid.last = {
-                                    total: transaction.amount,
-                                    date: transaction.timestamp
-                                };
-                            }
-                        });
-                        vm.lent.left = vm.credit.amount - vm.lent;
-                        vm.lent.progress = vm.lent / vm.credit.amount;
-                        vm.paid.left = vm.credit.amount - vm.lent;
-                        vm.paid.progress = vm.lent / vm.credit.amount;
-                    });
+                vm = loadTransactions(fbRef, $firebaseArray, vm.credit, vm);
             });
     }
+
+    function loadTransactions(fbRef, $firebaseArray, credit, vm) {
+        var query = fbRef.child('transactions').orderByChild('credit').equalTo(credit.$id);
+        vm.transactions = $firebaseArray(query);
+
+        vm.transactions.$loaded()
+            .then(function(){
+                vm.lent = {total: 0, count: 0};
+                vm.paid = {total: 0, count: 0};
+                angular.forEach(vm.transactions, function(transaction) {
+                    if(transaction.user != credit.user) {
+                        vm.lent.count++;
+                        vm.lent.total += transaction.amount;
+                    } else {
+                        vm.paid.count++;
+                        vm.paid.total += transaction.amount;
+                        vm.paid.last = {
+                            total: transaction.amount,
+                            date: transaction.timestamp
+                        };
+                    }
+                });
+                vm.lent.left = credit.amount/2 - vm.lent;
+                vm.lent.progress = vm.lent / (credit.amount/2);
+                vm.paid.left = credit.amount*1.5 - vm.lent;
+                vm.paid.progress = vm.lent / (credit.amount*1.5);
+            });
+        return vm;
+    }
+
 })();

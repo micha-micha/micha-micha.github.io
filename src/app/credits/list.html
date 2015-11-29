@@ -2,14 +2,75 @@
     <h1>Créditos</h1>
 
     <div class="row" ng-repeat="credit in csc.credits" ng-click="csc.status(credit)">
-        <div class="small-12 large-4 columns">
-            Monto: {{ credit.amount }}
+        <div ng-if="credit.status == 'pending'">
+            <div class="row">
+                <div class="large-8 large-offset-2 columns">
+                    <center>
+                        <h3>Recaudar <span class="header-money">${{ credit.amount | number:0 }} MXN</span>
+                            para <br>
+                            <span class="header-reason">{{ credit.title }}</span>.</h3>
+                    </center>
+                </div>
+            </div>
+
+            <br/>
+            <div class="row">
+                <div class="large-8 small-12 large-offset-2 columns">
+                    <div class="right">
+                        <span class="fulfillment_caption">Cr&eacute;dito por juntar:</span>
+                        <span class="amount_fulfilled">${{ credit.amount / 2 | number:0 }} MXN</span>
+                    </div>
+                    <div class="success progress" role="progressbar" tabindex="0" ng-attr-aria-valuenow="{{cc.lent.progress*100}}"
+                         aria-valuemin="0" ng-attr-aria-valuetext="{{ csc.credits_data[credit.$id].lent.progress*100 }} percent" aria-valuemax="100">
+                        <div class="progress-meter" ng-style="{width: csc.credits_data[credit.$id].lent.progress*100 + '%'}"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="large-4 small-12 large-offset-2 columns">
+                    <span class="payments_pending">Aportaciones: {{ csc.credits_data[credit.$id].lent.count }}</span>
+                </div>
+                <div class="large-4 small-12 columns">
+                    <span class="monto_cubierto">Monto recaudado: ${{ csc.credits_data[credit.$id].lent.total | number:0 }} MXN</span>
+                </div>
+            </div>
         </div>
-        <div class="small-12 large-4 columns">
-            {{ credit.status }}
+
+        <div ng-if="credit.status != 'pending'">
+            <div class="row">
+                <div class="large-8 large-offset-2 columns">
+                    <center>
+                        <h3>Pagar <span class="header-money">${{ credit.amount | number:0 }} MXN</span>
+                            por <br>
+                            <span class="header-reason">{{ credit.title }}</span>.</h3>
+                    </center>
+                </div>
+            </div>
+
+            <br/>
+            <div class="row">
+                <div class="large-8 small-12 large-offset-2 columns">
+                    <div class="right">
+                        <span class="credit_caption">Cr&eacute;dito por pagar:</span>
+                        <span class="credit_amount">${{ credit.amount*1.5 | number:0 }} MXN</span>
+                    </div>
+                    <div class="success progress" role="progressbar" tabindex="0" ng-attr-aria-valuenow="{{csc.credits_data[credit.$id].paid.progress*100}}"
+                         aria-valuemin="0" ng-attr-aria-valuetext="{{csc.credits_data[credit.$id].paid.progress*100}} percent" aria-valuemax="100">
+                        <div class="progress-meter" ng-style="{width: csc.credits_data[credit.$id].paid.progress*100 + '%'}"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="large-4 small-12 large-offset-2 columns">
+                    <span class="payments_pending">Pagos Restantes: {{ (credit.months - csc.credits_data[credit.$id].paid.count) }}</span>
+                </div>
+                <div class="large-4 small-12 columns">
+                    <span class="monto_cubierto">Monto Saldado: ${{ csc.credits_data[credit.$id].paid.total | number:0 }} MXN</span>
+                </div>
+            </div>
         </div>
-        <div class="small-12 large-4 columns">
-            {{ credit.interest_rate }}
-        </div>
+        <hr>
     </div>
 </div>
