@@ -34,8 +34,10 @@
             templateUrl: 'app/credits/create.html'
         })
         .state('credits.pending', {
-            url: '/pending',
-            templateUrl: 'app/credits/pending.html'
+            url: '/:id/pending',
+            templateUrl: 'app/credits/pending.html',
+            controller: 'CreditController',
+            controllerAs: 'cc'
         })
         .state('credits.status', {
             url: '/:id/status',

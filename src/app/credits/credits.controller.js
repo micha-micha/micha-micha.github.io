@@ -20,17 +20,21 @@
     }
 
     /** @ngInject */
-    function CreditController($log, $stateParams, $firebaseArray, $firebaseObject, fbRef) {
+    function CreditController($log, $state, $stateParams, $firebaseArray, $firebaseObject, fbRef) {
         $log.log('ID: ', $stateParams.id);
         var vm = this;
         vm.today = new Date();
 
         var creditRef = fbRef.child('credits').child($stateParams.id);
         vm.credit = new $firebaseObject(creditRef);
+        vm.share_link = $state.href('credits.lend', {id: vm.credit.$id}, {absolute: true});
 
         $log.log('credit: ', vm.credit);
         vm.credit.$loaded()
             .then(function(data) {
+                vm.share_body = "¿Me apoyas con un crédito para " + vm.credit.title + "?\n"+
+                    vm.share_link;
+
                 var profilesRef = fbRef.child('users').child(vm.credit.user);
                 vm.requester = new $firebaseObject(profilesRef);
                 $log.log('requester: ', vm.requester);

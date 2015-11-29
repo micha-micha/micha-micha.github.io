@@ -14,6 +14,9 @@
         'firebase',
         'ui.router',
         'toastr'
-      ]);
+    ])
+    .filter('escape', function() {
+      return window.encodeURIComponent;
+    });
 
 })();
