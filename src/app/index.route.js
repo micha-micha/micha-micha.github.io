@@ -2,18 +2,35 @@
   'use strict';
 
   angular
-    .module('michaMicha')
-    .config(routerConfig);
+      .module('michaMicha')
+      .config(routerConfig);
 
   /** @ngInject */
   function routerConfig($stateProvider, $urlRouterProvider) {
     $stateProvider
-      .state('home', {
-        url: '/',
-        templateUrl: 'app/home/home.html'
-        // controller: 'MainController',
-        // controllerAs: 'main'
-      });
+        //.state('main', {
+        //    url: '/',
+        //    templateUrl: 'app/main/main.html',
+        //    controller: 'MainController',
+        //    controllerAs: 'main'
+        //})
+        .state('home', {
+            url: '/',
+            templateUrl: 'app/home/home.html'
+        })
+        .state('credits_list', {
+            url: '/credits/list',
+            templateUrl: 'app/credits/list.html',
+            controller: 'CreditsController',
+            controllerAs: 'credits'
+        })
+        .state('credits_request', {
+            url: '/credits/request',
+            templateUrl: 'app/credits/request.html',
+            controller: 'CreditsController',
+            controllerAs: 'credits'
+        })
+    ;
 
     $urlRouterProvider.otherwise('/');
   }

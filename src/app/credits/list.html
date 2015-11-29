@@ -1,0 +1,15 @@
+<div class="container">
+    <h1>Créditos</h1>
+
+    <div class="row" ng-repeat="credit in credits.credits">
+        <div class="small-12 large-4 columns">
+            Monto: {{ credit.amount }}
+        </div>
+        <div class="small-12 large-4 columns">
+            {{ credit.status }}
+        </div>
+        <div class="small-12 large-4 columns">
+            {{ credit.interest_rate }}
+        </div>
+    </div>
+</div>

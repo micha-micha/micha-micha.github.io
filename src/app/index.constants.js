@@ -5,6 +5,7 @@
   angular
     .module('michaMicha')
     .constant('malarkey', malarkey)
-    .constant('moment', moment);
+    .constant('moment', moment)
+    .value('fbURL', 'https://micha-y-micha.firebaseio.com/');
 
 })();
