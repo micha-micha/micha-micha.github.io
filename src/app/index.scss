@@ -17,6 +17,19 @@ $topbar-bg-color: #5AADBB;
 // bower:scss
 // endbower
 
+body, p, span {
+  font-family: 'Quattrocento Sans', sans-serif;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'Montserrat', sans-serif;
+}
+
+.header-money{
+  color: #3fc8c1;
+  font-family: 'Montserrat', sans-serif;
+}
+
 .browsehappy {
   margin: 0.2em 0;
   background: #ccc;

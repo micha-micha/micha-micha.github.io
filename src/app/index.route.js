@@ -30,6 +30,18 @@
             controller: 'CreditsController',
             controllerAs: 'credits'
         })
+        .state('credits_status', {
+            url: '/credits/status',
+            templateUrl: 'app/credits/status.html',
+            controller: 'CreditsController',
+            controllerAs: 'credits'
+        })
+        .state('credits_lend', {
+            url: '/credits/lend',
+            templateUrl: 'app/credits/lend.html',
+            controller: 'CreditsController',
+            controllerAs: 'credits'
+        })
     ;
 
     $urlRouterProvider.otherwise('/');
