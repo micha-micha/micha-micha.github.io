@@ -18,29 +18,32 @@
             url: '/',
             templateUrl: 'app/home/home.html'
         })
-        .state('credits_list', {
-            url: '/credits/list',
-            templateUrl: 'app/credits/list.html',
+        .state('credits', {
+            abstract: true,
+            url: '/credits',
+            template: '<ui-view/>',
             controller: 'CreditsController',
-            controllerAs: 'credits'
+            controllerAs: 'csc'
         })
-        .state('credits_request', {
-            url: '/credits/request',
-            templateUrl: 'app/credits/request.html',
-            controller: 'CreditsController',
-            controllerAs: 'credits'
+        .state('credits.list', {
+            url: '/list',
+            templateUrl: 'app/credits/list.html'
         })
-        .state('credits_status', {
-            url: '/credits/status',
+        .state('credits.request', {
+            url: '/request',
+            templateUrl: 'app/credits/request.html'
+        })
+        .state('credits.status', {
+            url: '/:id/status',
             templateUrl: 'app/credits/status.html',
-            controller: 'CreditsController',
-            controllerAs: 'credits'
+            controller: 'CreditController',
+            controllerAs: 'cc'
         })
-        .state('credits_lend', {
-            url: '/credits/lend',
+        .state('credits.lend', {
+            url: '/:id/lend',
             templateUrl: 'app/credits/lend.html',
-            controller: 'CreditsController',
-            controllerAs: 'credits'
+            controller: 'CreditController',
+            controllerAs: 'cc'
         })
     ;
 
