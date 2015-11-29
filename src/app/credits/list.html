@@ -1,7 +1,7 @@
 <div class="container">
     <h1>Créditos</h1>
 
-    <div class="row" ng-repeat="credit in csc.credits">
+    <div class="row" ng-repeat="credit in csc.credits" ng-click="csc.status(credit)">
         <div class="small-12 large-4 columns">
             Monto: {{ credit.amount }}
         </div>

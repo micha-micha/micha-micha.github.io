@@ -26,12 +26,16 @@
             controllerAs: 'csc'
         })
         .state('credits.list', {
-            url: '/list',
+            url: '',
             templateUrl: 'app/credits/list.html'
         })
-        .state('credits.request', {
-            url: '/request',
-            templateUrl: 'app/credits/request.html'
+        .state('credits.create', {
+            url: '/create',
+            templateUrl: 'app/credits/create.html'
+        })
+        .state('credits.pending', {
+            url: '/pending',
+            templateUrl: 'app/credits/pending.html'
         })
         .state('credits.status', {
             url: '/:id/status',

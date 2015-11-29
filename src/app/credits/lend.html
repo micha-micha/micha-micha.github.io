@@ -1,27 +1,10 @@
 <div class="container">
     <div class="row">
-        <div class="large-12 small-12 columns">
-            <div class="top-bar">
-                <div class="top-bar-left">
-                    <ul class="dropdown menu" data-dropdown-menu>
-                        <li class="menu-text">Site Title</li>
-                    </ul>
-                </div>
-                <div class="top-bar-right">
-                    <ul class="menu">
-                        <li><a href="#">Quiero Prestar</a></li>
-                        <li><a href="#">Necesito Cr&eacute;dito</a></li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="row">
         <div class="large-8 large-offset-2 columns">
             <center>
-                <h2>{{ cc.requester.first_name }} necesita <span class="header-money">${{ cc.credit.amount }}MXN</span>
-                    para {{ cc.credit.title }}.</h2>
+                <h2>Necesito <span class="header-money">${{ cc.credit.amount | number:0 }} MXN</span>
+                    para <br>
+                    <span class="header-reason">{{ cc.credit.title }}</span>.</h2>
                 <p>Por <a href="#">{{ cc.requester.first_name }} {{ cc.requester.last_name }}</a></p>
             </center>
         </div>
@@ -30,19 +13,20 @@
     <div class="row">
         <div class="large-8 columns">
             <img src="https://placeimg.com/700/480/people" width="100%"/>
-            <h5 class="description-name">Mariana:</h5>
+            <h5 class="description-name">{{ cc.requester.first_name }}:</h5>
             <p>{{ cc.credit.description }}</p>
         </div>
         <div class="large-4 columns">
             <div class="sidebar-block">
-                <h4>3 Inversionistas</h4>
+                <h4>{{ cc.lent.count }} inversionistas</h4>
                 <br/>
-                <h4 class="amount-remaining">$3,000</h4>
-                <p>de $5,000 a juntar</p>
-                <h4>24</h4>
+                <h4 class="amount-remaining">${{ cc.lent.total | number:0 }}</h4>
+                <p>de ${{ cc.credit.amount | number:0 }} a juntar</p>
+                <h4>{{ cc.credit.expiration_date | amDifference : cc.today : 'days' }}</h4>
                 <p>d&iacute;as para cerrar el plazo</p>
-                <div class="success progress" role="progressbar" tabindex="0" aria-valuenow="25" aria-valuemin="0" aria-valuetext="25 percent" aria-valuemax="100">
-                    <div class="progress-meter" style="width: 25%"></div>
+                <div class="success progress" role="progressbar" tabindex="0" ng-attr-aria-valuenow="{{cc.lent.progress*100}}"
+                     aria-valuemin="0" ng-attr-aria-valuetext="{{cc.lent.progress*100}} percent" aria-valuemax="100">
+                    <div class="progress-meter" ng-style="{width: cc.lent.progress*100 + '%'}"></div>
                 </div>
                 <a class="expanded button cta-button" href="#">INVERTIR</a>
                 <a class="expanded button share-button" href="#">COMPARTIR</a>
@@ -66,8 +50,10 @@
     <div class="row">
         <div class="large-8 large-offset-2 columns">
             <center>
-                <h2>Con una aportaci&oacute;n de <span class="header-money">$2,000 MXN</span> a {{ cc.requester.first_name }}</h2>
-                <h4>Recibir&aacute;s: <span class="receive-money">$2,453 MXN</span> de ganancia en 6 meses</h4>
+                <h2>Con una aportaci&oacute;n de <span class="header-money">${{ cc.lent.total | number: 0 }} MXN</span>
+                    a {{ cc.requester.first_name }}</h2>
+                <h4>Recibir&aacute;s <span class="receive-money">${{ cc.lent.total * 0.5 | number: 0 }} MXN</span>
+                    de ganancia en 6 meses</h4>
             </center>
         </div>
     </div>

@@ -9,6 +9,7 @@
         'ngSanitize',
         'ngMessages',
         'ngAria',
+        'angularMoment',
         'restangular',
         'firebase',
         'ui.router',

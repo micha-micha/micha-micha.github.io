@@ -1,33 +1,83 @@
 <div class="container">
     <div class="row">
-        <div class="large-12 small-12 columns">
-            <div class="top-bar">
-                <div class="top-bar-left">
-                    <ul class="dropdown menu" data-dropdown-menu>
-                        <li class="menu-text">Site Title</li>
-                    </ul>
-                </div>
-                <div class="top-bar-right">
-                    <ul class="menu">
-                        <li><a href="#">Quiero Prestar</a></li>
-                        <li><a href="#">Necesito Cr&eacute;dito</a></li>
-                    </ul>
-                </div>
+        <div class="large-10 small-12 large-offset-1 columns">
+            <h2>Status de Cr&eacute;dito</h2>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="large-8 large-offset-2 columns">
+            <center>
+                <h3>Necesito <span class="header-money">${{ cc.credit.amount | number:0 }} MXN</span>
+                    para <br>
+                    <span class="header-reason">{{ cc.credit.title }}</span>.</h3>
+                <p>Por <a href="#">{{ cc.requester.first_name }} {{ cc.requester.last_name }}</a></p>
+            </center>
+        </div>
+    </div>
+
+    <br/>
+    <div class="row">
+        <div class="large-8 small-12 large-offset-2 columns">
+            <div class="right">
+                <span class="credit_caption">Cr&eacute;dito por pagar:</span>
+                <span class="credit_amount">${{ cc.credit.amount | number:0 }} MXN</span>
+            </div>
+            <div class="success progress" role="progressbar" tabindex="0" ng-attr-aria-valuenow="{{cc.paid.progress*100}}"
+                 aria-valuemin="0" ng-attr-aria-valuetext="{{cc.paid.progress*100}} percent" aria-valuemax="100">
+                <div class="progress-meter" ng-style="{width: cc.paid.progress*100 + '%'}"></div>
             </div>
         </div>
     </div>
 
     <div class="row">
-        <div class="large-10 small-12 large-offset-1 columns">
-            <h2>Status de Cr&eacute;dito</h2>
+        <div class="large-4 small-12 large-offset-2 columns">
+            <span class="payments_pending">Pagos Restantes: {{ (cc.credit.months - cc.paid.count) }}</span>
+        </div>
+        <div class="large-4 small-12 columns">
+            <span class="monto_cubierto">Monto Saldado: ${{ cc.paid.total | number:0 }} MXN</span>
         </div>
     </div>
     <br/>
+    <br/>
     <div class="row">
-        <div class="large-8 small-12 large-offset-2 columns">
-            <center>
-                <h3>Mar&iacute;ana necesita <span class="header-money">$10,000MXN</span> para la fiesta de XV de su hija</h3>
-            </center>
+        <div class="large-5 small-12 large-offset-1 columns">
+            <h3>Detalles:</h3>
+            <hr>
+            <div ng-if="cc.paid.total > 0">
+                <p class="subtitle green">&Uacute;ltimo Pago:</p>
+                <p>${{ cc.paid.last.total | number: 0}} MXN, {{ cc.paid.last.date }}</p>
+            </div>
+            <p class="subtitle green">Fecha de Aprobaci&oacute;n de Cr&eacute;dito</p>
+            <p>Mi&eacute;, 23 de Diciembre de 2015</p>
+            <p class="subtitle green">Plazos</p>
+            <p>36 Pagos</p>
+            <p class="subtitle green">Tasa de Inter&eacute;s</p>
+            <p>24%</p>
+            <p class="subtitle green">Fecha de Finalizaci&oacute;n</p>
+            <p>23 de Enero de 2017</p>
+        </div>
+        <div class="large-5 small-12 columns">
+            <div class="graybox">
+                <div class="row">
+                    <div class="large-7 columns">
+                        <h5>Inversionistas</h5>
+                    </div>
+                    <div class="large-5 columns">
+                        <h5>Aportaciones</h5>
+                    </div>
+                </div>
+                <hr>
+                <div class="row">
+                    <div class="large-7 columns">
+                        <p>Sofia Rivera</p>
+                    </div>
+                    <div class="large-5 columns">
+                        <p>$100MXN</p>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
+
 </div>
