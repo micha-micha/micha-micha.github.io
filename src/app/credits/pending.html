@@ -10,11 +10,11 @@
     <div class="row">
         <div class="large-8 small-12 large-offset-2 columns">
             <div class="right">
-                <span class="fulfillment_caption">Monto recaudado:</span> <span class="amount_fulfilled">${{ cc.lent.total | number:0 }} MXN</span>
+                <span class="fulfillment_caption">Monto recaudado:</span> <span class="amount_fulfilled">${{ cc.stats().lent.total | number:0 }} MXN</span>
             </div>
-            <div class="success progress" role="progressbar" tabindex="0" ng-attr-aria-valuenow="{{cc.lent.progress*100}}"
-                 aria-valuemin="0" ng-attr-aria-valuetext="{{cc.lent.progress*100}} percent" aria-valuemax="100">
-                <div class="progress-meter" ng-style="{width: cc.lent.progress*100 + '%'}"></div>
+            <div class="success progress" role="progressbar" tabindex="0" ng-attr-aria-valuenow="{{cc.stats().lent.progress*100}}"
+                 aria-valuemin="0" ng-attr-aria-valuetext="{{ cc.stats().lent.progress*100 }} percent" aria-valuemax="100">
+                <div class="progress-meter" ng-style="{width: cc.stats().lent.progress*100 + '%'}"></div>
             </div>
         </div>
     </div>
@@ -23,7 +23,7 @@
             <span class="payments_pending">D&iacute;as Restantes: {{ cc.credit.expiration_date | amDifference : cc.today : 'days' }}</span>
         </div>
         <div class="large-4 small-12 columns">
-            <span class="monto_cubierto" style="text-align: right;">Meta: ${{ cc.credit.amount | number:0 }} MXN</span>
+            <span class="monto_cubierto" style="text-align: right;">Meta: ${{ cc.credit.amount / 2 | number:0 }} MXN</span>
         </div>
     </div>
     <br/>

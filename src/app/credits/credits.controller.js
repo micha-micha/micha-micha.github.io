@@ -20,7 +20,7 @@
         };
 
         vm.credits.$loaded()
-            .then(function(data) {
+            .then(function() {
                 angular.forEach(vm.credits, function(credit) {
                     vm.credits_data[credit.$id] = loadTransactions(fbRef, $firebaseArray, credit, {});
                 });
@@ -40,7 +40,7 @@
 
         $log.log('credit: ', vm.credit);
         vm.credit.$loaded()
-            .then(function(data) {
+            .then(function() {
                 vm.share_body = "¿Me apoyas con un crédito para " + vm.credit.title + "?\n"+
                     vm.share_link;
 
@@ -55,6 +55,29 @@
     function loadTransactions(fbRef, $firebaseArray, credit, vm) {
         var query = fbRef.child('transactions').orderByChild('credit').equalTo(credit.$id);
         vm.transactions = $firebaseArray(query);
+        vm.stats = function() {
+            var stats = {lent: {}, paid: {}};
+            stats.lent = {total: 0, count: 0};
+            stats.paid = {total: 0, count: 0};
+            angular.forEach(vm.transactions, function(transaction) {
+                if(transaction.user != credit.user) {
+                    stats.lent.count++;
+                    stats.lent.total += transaction.amount;
+                } else {
+                    stats.paid.count++;
+                    stats.paid.total += transaction.amount;
+                    stats.paid.last = {
+                        total: transaction.amount,
+                        date: transaction.timestamp
+                    };
+                }
+            });
+            stats.lent.left = credit.amount/2 - stats.lent;
+            stats.lent.progress = stats.lent / (credit.amount/2);
+            stats.paid.left = credit.amount*1.5 - stats.lent;
+            stats.paid.progress = stats.lent / (credit.amount*1.5);
+            return stats;
+        };
 
         vm.transactions.$loaded()
             .then(function(){

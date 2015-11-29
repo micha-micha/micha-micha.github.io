@@ -1,5 +1,9 @@
 <div class="container">
-    <h1>Créditos</h1>
+    <div class="row">
+        <div class="large-10 small-12 large-offset-1 columns">
+            <h2>Créditos</h2>
+        </div>
+    </div>
 
     <div class="row" ng-repeat="credit in csc.credits" ng-click="csc.status(credit)">
         <div ng-if="credit.status == 'pending'">
@@ -20,19 +24,19 @@
                         <span class="fulfillment_caption">Cr&eacute;dito por juntar:</span>
                         <span class="amount_fulfilled">${{ credit.amount / 2 | number:0 }} MXN</span>
                     </div>
-                    <div class="success progress" role="progressbar" tabindex="0" ng-attr-aria-valuenow="{{cc.lent.progress*100}}"
-                         aria-valuemin="0" ng-attr-aria-valuetext="{{ csc.credits_data[credit.$id].lent.progress*100 }} percent" aria-valuemax="100">
-                        <div class="progress-meter" ng-style="{width: csc.credits_data[credit.$id].lent.progress*100 + '%'}"></div>
+                    <div class="success progress" role="progressbar" tabindex="0" ng-attr-aria-valuenow="{{cc.stats().lent.progress*100}}"
+                         aria-valuemin="0" ng-attr-aria-valuetext="{{ csc.credits_data[credit.$id].stats().lent.progress*100 }} percent" aria-valuemax="100">
+                        <div class="progress-meter" ng-style="{width: csc.credits_data[credit.$id].stats().lent.progress*100 + '%'}"></div>
                     </div>
                 </div>
             </div>
 
             <div class="row">
                 <div class="large-4 small-12 large-offset-2 columns">
-                    <span class="payments_pending">Aportaciones: {{ csc.credits_data[credit.$id].lent.count }}</span>
+                    <span class="payments_pending">Aportaciones: {{ csc.credits_data[credit.$id].stats().lent.count }}</span>
                 </div>
                 <div class="large-4 small-12 columns">
-                    <span class="monto_cubierto">Monto recaudado: ${{ csc.credits_data[credit.$id].lent.total | number:0 }} MXN</span>
+                    <span class="monto_cubierto">Monto recaudado: ${{ csc.credits_data[credit.$id].stats().lent.total | number:0 }} MXN</span>
                 </div>
             </div>
         </div>
@@ -55,19 +59,19 @@
                         <span class="credit_caption">Cr&eacute;dito por pagar:</span>
                         <span class="credit_amount">${{ credit.amount*1.5 | number:0 }} MXN</span>
                     </div>
-                    <div class="success progress" role="progressbar" tabindex="0" ng-attr-aria-valuenow="{{csc.credits_data[credit.$id].paid.progress*100}}"
-                         aria-valuemin="0" ng-attr-aria-valuetext="{{csc.credits_data[credit.$id].paid.progress*100}} percent" aria-valuemax="100">
-                        <div class="progress-meter" ng-style="{width: csc.credits_data[credit.$id].paid.progress*100 + '%'}"></div>
+                    <div class="success progress" role="progressbar" tabindex="0" ng-attr-aria-valuenow="{{csc.credits_data[credit.$id].stats().paid.progress*100}}"
+                         aria-valuemin="0" ng-attr-aria-valuetext="{{csc.credits_data[credit.$id].stats().paid.progress*100}} percent" aria-valuemax="100">
+                        <div class="progress-meter" ng-style="{width: csc.credits_data[credit.$id].stats().paid.progress*100 + '%'}"></div>
                     </div>
                 </div>
             </div>
 
             <div class="row">
                 <div class="large-4 small-12 large-offset-2 columns">
-                    <span class="payments_pending">Pagos Restantes: {{ (credit.months - csc.credits_data[credit.$id].paid.count) }}</span>
+                    <span class="payments_pending">Pagos Restantes: {{ (credit.months - csc.credits_data[credit.$id].stats().paid.count) }}</span>
                 </div>
                 <div class="large-4 small-12 columns">
-                    <span class="monto_cubierto">Monto Saldado: ${{ csc.credits_data[credit.$id].paid.total | number:0 }} MXN</span>
+                    <span class="monto_cubierto">Monto Saldado: ${{ csc.credits_data[credit.$id].stats().paid.total | number:0 }} MXN</span>
                 </div>
             </div>
         </div>
